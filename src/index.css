@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
+
+:root {
+  --primary-light: #f3efe0;
+  --primary-gray: #434242;
+  --primary-dark: #222222;
+  --primary-cyan: #22a39f;
+  --primary-darkWhite: #d4d1d1;
+  --body-background-color: #f3efe0;
+  --min-width: 1280px;
+  --max-width: 1660px;
+  --tablet-width: 835px;
+  --smartphone-width: 414px;
+  --h1-font-size: calc((64 / 16) * 1rem);
+  --h2-font-size: calc((48 / 16) * 1rem);
+  --h3-font-size: calc((32 / 16) * 1rem);
+  --h4-font-size: calc((16 / 16) * 1rem);
+  --h5-font-size: calc((12 / 16) * 1rem);
+  --paragraph-font-size: calc((18 / 16) * 1rem);
+  --pd-size-sm: calc((8 / 16) * 1rem);
+  --pd-size-md: calc((16 / 16) * 1rem);
+  --pd-size-lg: calc((24 / 16) * 1rem);
+  --pd-size-xl: calc((32 / 16) * 1rem);
+  --mg-size-sm: calc((8 / 16) * 1rem);
+  --mg-size-md: calc((16 / 16) * 1rem);
+  --mg-size-lg: calc((24 / 16) * 1rem);
+  --mg-size-xl: calc((32 / 16) * 1rem);
+  --mg-size-xxl: calc((64 / 16) * 1rem);
+  --transition: all 0.2s ease-in;
+  --letter-spacing: 0.1rem;
+  --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  /* Scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--body-background-color);
+  line-height: 1.5;
+}
