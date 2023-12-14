@@ -16,7 +16,7 @@ const OverLay = () => {
       <div className="overlay-nav">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/Pokemons">Pokemons</NavLink>
-        <NavLink to="/search?q=">Search</NavLink>
+        <NavLink to="/search?q=pikachu">Search</NavLink>
       </div>
     </OverLayWrapper>
   );
