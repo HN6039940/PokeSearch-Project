@@ -8,7 +8,7 @@ import {
   PokemonPage,
 } from "./pages/index.js";
 import { loader as pokemonLoader } from "./pages/Pokemon/Pokemon.jsx";
-import { loader as formLoader } from "./pages/Search/SearchPage.jsx";
+import { loader as formLoader } from "./pages/Search/loader/loader.js";
 const BrowserTouter = createBrowserRouter([
   {
     path: "/",

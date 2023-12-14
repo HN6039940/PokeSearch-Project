@@ -1,7 +1,9 @@
 import { useDispatch } from "react-redux";
+
 import { Link } from "react-router-dom";
 // store
-import { initializeUrl } from "../../redux/slice/pokemonsListSlice";
+import { initializeUrl } from "../../redux/slice/pokemonsListSlice"; // store
+
 // components
 import Button from "../../components/btn/Button.jsx";
 // styles
@@ -9,6 +11,7 @@ import { LandingPageWrapper } from "../../assets/styles/LandingPage_Wrapper.js";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
+
   return (
     <LandingPageWrapper>
       <div>
