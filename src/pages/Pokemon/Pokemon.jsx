@@ -23,17 +23,13 @@ const Pokemon = () => {
 
   const { state } = useLocation();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pokemon", id],
     queryFn: async () => {
-      try {
-        const [pokemonData, pokemonSpeciesData] = await getPokemonData(
-          id || nameParam
-        );
-        return { ...pokemonData, ...pokemonSpeciesData };
-      } catch (error) {
-        return error;
-      }
+      const [pokemonData, pokemonSpeciesData] = await getPokemonData(
+        id || nameParam
+      );
+      return { ...pokemonData, ...pokemonSpeciesData };
     },
     staleTime: 1000 * 60 * 2,
     cacheTime: 1000 * 60 * 3,
@@ -47,10 +43,17 @@ const Pokemon = () => {
     );
   }
 
+  if (isError) {
+    throw new Response("Error", {
+      status: error?.response.status,
+      statusText: error?.message,
+    });
+  }
+
   const { flavor_text_entries, height, sprites, types, weight, names } = data;
   const { front_default, other } = sprites;
 
-  // dataから取得するのは英語のタイプ名なので、以下の式はそれらを日本語のタイプ名に変換している。
+  // dataから取得するのは英語のタイプ名やテキストなので、以下の式はそれらを日本語に変換している。
   // それぞれ type flavor_text name を日本語に変換している。
 
   const pokemonEnTypes = types.reduce((acc, item) => {

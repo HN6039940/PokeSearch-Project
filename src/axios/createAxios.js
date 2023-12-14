@@ -11,28 +11,32 @@ export const fetchPokemonSpecies = (params) => {
 };
 
 export const getPokemonMenuData = async (results) => {
-  const promise = await results.map(async (item) => {
-    const pokemonSpeciesUrlResults = await axios.get(item.url);
-    const pokemonUrlResults = await fetchPokemon(
-      pokemonSpeciesUrlResults.data.id
-    );
+  try {
+    const promise = await results.map(async (item) => {
+      const pokemonSpeciesUrlResults = await axios.get(item.url);
+      const pokemonUrlResults = await fetchPokemon(
+        pokemonSpeciesUrlResults.data.id
+      );
 
-    return {
-      url: item.url,
-      id: pokemonUrlResults.data.id,
-      sprites: pokemonUrlResults.data.sprites.front_default,
-      jpName: pokemonSpeciesUrlResults.data.names
-        .filter((item) => item.language.name === "ja-Hrkt")
-        .map((item) => item.name)[0],
-      enName: pokemonSpeciesUrlResults.data.names
-        .filter((item) => item.language.name === "en")
-        .map((item) => item.name)[0],
-    };
-  });
+      return {
+        url: item.url,
+        id: pokemonUrlResults.data.id,
+        sprites: pokemonUrlResults.data.sprites.front_default,
+        jpName: pokemonSpeciesUrlResults.data.names
+          .filter((item) => item.language.name === "ja-Hrkt")
+          .map((item) => item.name)[0],
+        enName: pokemonSpeciesUrlResults.data.names
+          .filter((item) => item.language.name === "en")
+          .map((item) => item.name)[0],
+      };
+    });
 
-  return Promise.all(promise).then((results) => {
-    return results;
-  });
+    return Promise.all(promise).then((results) => {
+      return results;
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 export const getPokemonData = async (id) => {
@@ -50,7 +54,7 @@ export const getPokemonData = async (id) => {
 
     return promises;
   } catch (error) {
-    return error;
+    throw new Error(error);
   }
 };
 

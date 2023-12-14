@@ -37,16 +37,12 @@ const SearchPage = () => {
     navigate(".", { replace: true, search: "?q=" });
   }, [navigate]);
 
-  useQuery({
+  const { isError, error } = useQuery({
     queryKey: ["pokemon", limit],
     queryFn: async () => {
-      try {
-        const result = await getLimitPokemonData(limit);
-        dispatch(fetchAllPokemon(result));
-        return null;
-      } catch (error) {
-        return error;
-      }
+      const result = await getLimitPokemonData(limit);
+      dispatch(fetchAllPokemon(result));
+      return null;
     },
     // cache
     staleTime: 1000 * 60 * 2,
@@ -56,13 +52,9 @@ const SearchPage = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["filterPokemon", query],
     queryFn: async () => {
-      try {
-        // 入力した際の頭文字を問わずに検索に引っ掛ける為queryの最初の文字を大文字に変換する必要あり
-        const formatQuery = query.slice(0, 1).toUpperCase() + query.slice(1);
-        return { query: formatQuery };
-      } catch (error) {
-        return error;
-      }
+      // 入力した際の頭文字を問わずに検索に引っ掛ける為queryの最初の文字を大文字に変換する必要あり
+      const formatQuery = query.slice(0, 1).toUpperCase() + query.slice(1);
+      return { query: formatQuery };
     },
     // cache
     staleTime: 1000 * 60 * 2,
@@ -81,6 +73,13 @@ const SearchPage = () => {
         <Loading />
       </>
     );
+  }
+
+  if (isError) {
+    throw new Response("Error", {
+      status: error?.response.status,
+      statusText: error?.message,
+    });
   }
 
   return (

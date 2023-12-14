@@ -21,7 +21,7 @@ const PokemonsList = () => {
   const { currentPageUrl } = useSelector((state) => state.pokemonsList);
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["pokemons", currentPageUrl],
     queryFn: async () => {
       const {
@@ -30,6 +30,7 @@ const PokemonsList = () => {
       const pokemonsMenuData = await Promise.all(
         await getPokemonMenuData(results)
       );
+
       // queryFnから取得する次データのqueryParameterであるlimitの整合性を保つために、limit=30に変換している。
       const formatNext = next ? next.slice(0, -2) + "30" : null;
       const formatPrevious = previous ? previous.slice(0, -2) + "30" : null;
@@ -52,6 +53,7 @@ const PokemonsList = () => {
       };
     },
     staleTime: 1000 * 60 * 2,
+    cacheTime: 1000 * 60 * 3,
   });
 
   if (isLoading) {
@@ -61,6 +63,14 @@ const PokemonsList = () => {
       </>
     );
   }
+
+  if (isError) {
+    throw new Response("Error", {
+      status: error?.response.status,
+      statusText: error?.message,
+    });
+  }
+
   const { formatNext, formatPrevious, pokemonsMenuData, current } = data;
 
   return (
